@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-define("ROOT_DIR", dirname(__FILE__, 1));
+define("ROOT_DIR", dirname(__DIR__, 1));
 $path_parts = pathinfo($_SERVER['SCRIPT_FILENAME']);
 chdir($path_parts['dirname']);
 
@@ -30,11 +30,11 @@ foreach ( $data['exchangeRate'] as $key => $item ) {
 	}
 }
 
-echo "<pre>";
-print_r(ROOT_DIR);
-print_r($kurs);
-echo "</pre>";
-die();
+// echo "<pre>";
+// print_r(ROOT_DIR);
+// print_r($kurs);
+// echo "</pre>";
+// die();
 
 // @unlink(ROOT_DIR.'/tmp/kurs.jpg');
 
