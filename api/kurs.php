@@ -7,16 +7,15 @@ chdir($path_parts['dirname']);
 $url = 'https://api.privatbank.ua/p24api/exchange_rates?json&date='.date('d.m.Y');
 $data = json_decode(file_get_contents($url), true);
 
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-die();
+
 
 $kurs = '';
 foreach ( $data['exchangeRate'] as $key => $item ) {
 	
-	$item['saleRate'] = number_format($item['saleRate'], 2, '.', '');
-	$item['purchaseRate'] = number_format($item['purchaseRate'], 2, '.', '');
+	if ( $item['currency'] === 'USD' || $item['currency'] === 'EUR' ) {
+		$item['saleRate'] = number_format($item['saleRate'], 2, '.', '');
+		$item['purchaseRate'] = number_format($item['purchaseRate'], 2, '.', '');
+	}
 	
 	if ( $item['currency'] === 'USD' ) {
 		$kurs .= '$  ' . $item['saleRate'].' - ' . $item['purchaseRate'];
@@ -29,6 +28,12 @@ foreach ( $data['exchangeRate'] as $key => $item ) {
 		$kurs .= ''.PHP_EOL;
 	}
 }
+
+
+echo "<pre>";
+print_r($kurs);
+echo "</pre>";
+die();
 
 @unlink(ROOT_DIR.'/tmp/kurs.jpg');
 
