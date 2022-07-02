@@ -7,6 +7,11 @@ chdir($path_parts['dirname']);
 $url = 'https://api.privatbank.ua/p24api/exchange_rates?json&date='.date('d.m.Y');
 $data = json_decode(file_get_contents($url), true);
 
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+die();
+
 $kurs = '';
 foreach ( $data['exchangeRate'] as $key => $item ) {
 	
