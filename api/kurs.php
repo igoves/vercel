@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-define("ROOT_DIR", dirname(__FILE__, 2));
+define("ROOT_DIR", dirname(__FILE__, 1));
 $path_parts = pathinfo($_SERVER['SCRIPT_FILENAME']);
 chdir($path_parts['dirname']);
 
@@ -20,16 +20,14 @@ foreach ( $data['exchangeRate'] as $key => $item ) {
 	if ( isset($item['currency']) && $item['currency'] === 'USD' ) {
 		$kurs .= '$  ' . $item['saleRate'].' - ' . $item['purchaseRate'];
 	}
-	
-	$kurs .= ''.PHP_EOL;
-	
+
 	if ( isset($item['currency']) && $item['currency'] === 'EUR' ) {
 		$kurs .= 'E  ' . $item['saleRate'].' - '. $item['purchaseRate'].PHP_EOL;
 	}
-	// if ( $item['currency'] === 'RUB' ) {
+	if ( isset($item['currency']) && $item['currency'] === 'RUB' ) {
 		// $kurs .= 'P  ' . $item['saleRate'].' - '. $item['purchaseRate'].PHP_EOL;
-		// $kurs .= ''.PHP_EOL;
-	// }
+		$kurs .= ''.PHP_EOL;
+	}
 }
 
 echo "<pre>";
