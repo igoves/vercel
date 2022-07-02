@@ -12,30 +12,33 @@ $data = json_decode(file_get_contents($url), true);
 $kurs = '';
 foreach ( $data['exchangeRate'] as $key => $item ) {
 	
-	if ( $item['currency'] === 'USD' || $item['currency'] === 'EUR' ) {
+	if ( isset($item['currency']) && ( $item['currency'] === 'USD' || $item['currency'] === 'EUR' ) ) {
 		$item['saleRate'] = number_format($item['saleRate'], 2, '.', '');
 		$item['purchaseRate'] = number_format($item['purchaseRate'], 2, '.', '');
 	}
 	
-	if ( $item['currency'] === 'USD' ) {
+	if ( isset($item['currency']) && $item['currency'] === 'USD' ) {
 		$kurs .= '$  ' . $item['saleRate'].' - ' . $item['purchaseRate'];
 	}
-	if ( $item['currency'] === 'EUR' ) {
+	
+	$kurs .= ''.PHP_EOL;
+	
+	if ( isset($item['currency']) && $item['currency'] === 'EUR' ) {
 		$kurs .= 'E  ' . $item['saleRate'].' - '. $item['purchaseRate'].PHP_EOL;
 	}
-	if ( $item['currency'] === 'RUB' ) {
+	// if ( $item['currency'] === 'RUB' ) {
 		// $kurs .= 'P  ' . $item['saleRate'].' - '. $item['purchaseRate'].PHP_EOL;
-		$kurs .= ''.PHP_EOL;
-	}
+		// $kurs .= ''.PHP_EOL;
+	// }
 }
 
-
 echo "<pre>";
+print_r(ROOT_DIR);
 print_r($kurs);
 echo "</pre>";
 die();
 
-@unlink(ROOT_DIR.'/tmp/kurs.jpg');
+// @unlink(ROOT_DIR.'/tmp/kurs.jpg');
 
 if ( !empty($kurs) ) {
 
